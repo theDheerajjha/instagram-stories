@@ -1,7 +1,8 @@
+import React from 'react'
 import { Stories } from './components/Stories'
 import './App.css'
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="app">
       <Stories />

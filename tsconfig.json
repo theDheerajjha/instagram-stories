@@ -20,8 +20,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    /* CSS Modules */
-    "types": ["vite/client"]
+    /* Types */
+    "types": ["vite/client", "cypress"]
   },
   "include": ["src", "cypress"],
   "references": [{ "path": "./tsconfig.node.json" }]

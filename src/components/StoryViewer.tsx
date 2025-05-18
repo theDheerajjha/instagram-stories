@@ -22,29 +22,50 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
   isPlaying,
 }) => {
   const [progress, setProgress] = useState<number>(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     setProgress(0);
-    const interval = setInterval(() => {
-      if (isPlaying) {
+    setImageLoaded(false);
+    setImageError(false);
+  }, [story.id]);
+
+  useEffect(() => {
+    let timer: number;
+
+    if (isPlaying && imageLoaded && !imageError) {
+      timer = window.setInterval(() => {
         setProgress((prev) => {
           if (prev >= 100) {
-            clearInterval(interval);
+            clearInterval(timer);
             return 100;
           }
           return prev + 2;
         });
-      }
-    }, 100);
+      }, 100);
+    }
 
-    return () => clearInterval(interval);
-  }, [story.id, isPlaying]);
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [story.id, isPlaying, imageLoaded, imageError]);
 
   useEffect(() => {
     if (progress >= 100) {
       onNext();
     }
   }, [progress, onNext]);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+    setImageError(false);
+  };
+
+  const handleImageError = () => {
+    setImageError(true);
+    setImageLoaded(false);
+  };
 
   return (
     <div className={`${styles.storyViewer} ${styles.fadeIn}`}>
@@ -67,10 +88,23 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
         <div className={styles.timestamp}>{story.timestamp}</div>
       </div>
 
+      {!imageLoaded && !imageError && (
+        <div className={styles.loading}>Loading...</div>
+      )}
+
+      {imageError && (
+        <div className={styles.error}>
+          Failed to load image. Tap to try again.
+        </div>
+      )}
+
       <img
         src={story.imageUrl}
         alt={`Story by ${story.username}`}
-        className={styles.storyImage}
+        className={`${styles.storyImage} ${imageLoaded ? styles.fadeIn : ''}`}
+        onLoad={handleImageLoad}
+        onError={handleImageError}
+        style={{ display: imageLoaded ? 'block' : 'none' }}
       />
 
       <div className={styles.navigationButtons}>

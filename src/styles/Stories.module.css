@@ -28,6 +28,7 @@
   border: 2px solid #e1306c;
   padding: 2px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .storyPreviewImage {
@@ -109,6 +110,8 @@
   background: transparent;
   border: none;
   cursor: pointer;
+  padding: 0;
+  margin: 0;
 }
 
 .username {
@@ -121,12 +124,21 @@
   opacity: 0.8;
 }
 
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+.loading, .error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: #fff;
+  text-align: center;
+  z-index: 1;
+}
+
+.error {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 16px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 @keyframes fadeIn {
