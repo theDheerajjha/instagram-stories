@@ -1,0 +1,143 @@
+.storiesContainer {
+  width: 100%;
+  max-width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+.storyList {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  overflow-x: auto;
+  background-color: #fff;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.storyList::-webkit-scrollbar {
+  display: none;
+}
+
+.storyPreview {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid #e1306c;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.storyPreviewImage {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.storyViewer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #000;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.storyImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.storyHeader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+  z-index: 1;
+}
+
+.storyProgress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: 4px;
+  padding: 8px;
+  z-index: 2;
+}
+
+.progressBar {
+  height: 2px;
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: #fff;
+  transition: width 0.1s linear;
+}
+
+.navigationButtons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  z-index: 1;
+}
+
+.navButton {
+  flex: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.username {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.timestamp {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+} 
