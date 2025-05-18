@@ -270,6 +270,16 @@
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+.navigationButtons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  z-index: 2;
+}
+
 .navButton {
   flex: 1;
   background: transparent;
@@ -277,8 +287,18 @@
   cursor: pointer;
   padding: 0;
   margin: 0;
+  height: 100%;
   opacity: 0;
   outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.navButton:first-child {
+  width: 30%;
+}
+
+.navButton:last-child {
+  width: 70%;
 }
 
 .navButton:hover {
@@ -289,14 +309,6 @@
 /* Remove any potential borders */
 .navButton:focus {
   outline: none;
-}
-
-.navButton:first-child {
-  border-right: none;
-}
-
-.navButton:last-child {
-  border-left: none;
 }
 
 .userInfo {

@@ -172,6 +172,7 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
             e.stopPropagation();
             onPrevious();
           }}
+          aria-label="Previous story"
         />
         <button
           className={styles.navButton}
@@ -179,6 +180,7 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
             e.stopPropagation();
             onNext();
           }}
+          aria-label="Next story"
         />
       </div>
     </div>
