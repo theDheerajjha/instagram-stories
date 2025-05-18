@@ -20,6 +20,15 @@ A modern implementation of Instagram's Stories feature built with React and Type
 - CSS Modules
 - Cypress
 
+## Development Tools
+
+This project leverages modern development tools to ensure high-quality code and design:
+
+- **AI-Assisted Styling**: I have Used AI tools to generate and refine CSS styles, ensuring a polished and professional UI that closely matches Instagram's design patterns
+- **TypeScript** for type safety and better developer experience
+- **CSS Modules** for scoped styling and better maintainability
+- **Cypress** for end-to-end testing
+
 ## Getting Started
 
 ### Prerequisites
@@ -50,14 +59,5 @@ npm run dev
 npm run cypress
 ```
 
-## Project Structure
 
-```
-src/
-  ├── components/     # UI components
-  ├── hooks/         # Custom React hooks
-  ├── types/         # TypeScript types
-  ├── data/         # Mock data
-  ├── styles/       # CSS modules
-  └── tests/        # Test files
-```
+
