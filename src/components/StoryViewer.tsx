@@ -10,6 +10,8 @@ interface StoryViewerProps {
   onPrevious: () => void;
   onClose: () => void;
   isPlaying: boolean;
+  onPause: () => void;
+  onPlay: () => void;
 }
 
 export const StoryViewer: React.FC<StoryViewerProps> = ({
@@ -20,10 +22,13 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
   onPrevious,
   onClose,
   isPlaying,
+  onPause,
+  onPlay,
 }) => {
   const [progress, setProgress] = useState<number>(0);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
 
   useEffect(() => {
     setProgress(0);
@@ -67,8 +72,39 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
     setImageLoaded(false);
   };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.touches[0].clientX);
+    onPause();
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStart === null) return;
+
+    const touchEnd = e.changedTouches[0].clientX;
+    const diff = touchStart - touchEnd;
+
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        onNext();
+      } else {
+        onPrevious();
+      }
+    }
+
+    setTouchStart(null);
+    onPlay();
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    e.preventDefault();
+  };
+
   return (
-    <div className={`${styles.storyViewer} ${styles.fadeIn}`}>
+    <div className={styles.storyViewer}>
+      <button className={styles.backButton} onClick={onClose}>
+        ←
+      </button>
+
       <div className={styles.storyProgress}>
         {Array.from({ length: totalStories }).map((_, index) => (
           <div key={index} className={styles.progressBar}>
@@ -84,17 +120,34 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
       </div>
 
       <div className={styles.storyHeader}>
-        <div className={styles.username}>{story.username}</div>
-        <div className={styles.timestamp}>{story.timestamp}</div>
+        <div className={styles.userInfo}>
+          <img
+            src={story.userAvatar || story.imageUrl}
+            alt={story.username}
+            className={styles.userAvatar}
+          />
+          <div className={styles.userMeta}>
+            <div className={styles.username}>{story.username}</div>
+            <div className={styles.timestamp}>{story.timestamp}</div>
+          </div>
+        </div>
+        <div className={styles.storyActions}>
+          <button className={styles.actionButton} onClick={isPlaying ? onPause : onPlay}>
+            {isPlaying ? '⏸️' : '▶️'}
+          </button>
+        </div>
       </div>
 
       {!imageLoaded && !imageError && (
-        <div className={styles.loading}>Loading...</div>
+        <div className={styles.loading}>
+          <div className={styles.spinner} />
+          Loading story...
+        </div>
       )}
 
       {imageError && (
-        <div className={styles.error}>
-          Failed to load image. Tap to try again.
+        <div className={styles.error} onClick={() => setImageError(false)}>
+          Couldn't load story. Tap to retry.
         </div>
       )}
 
@@ -107,7 +160,12 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
         style={{ display: imageLoaded ? 'block' : 'none' }}
       />
 
-      <div className={styles.navigationButtons}>
+      <div 
+        className={styles.navigationButtons}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onTouchMove={handleTouchMove}
+      >
         <button
           className={styles.navButton}
           onClick={(e) => {

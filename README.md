@@ -1,22 +1,24 @@
-# Instagram Stories Feature
+# Instagram Stories Clone
 
-A simplified version of Instagram Stories built with React and TypeScript. This application allows users to view a series of stories with automatic progression and manual navigation.
+A modern implementation of Instagram's Stories feature built with React and TypeScript. This application provides a seamless story viewing experience with automatic progression and intuitive navigation.
 
 ## Features
 
-- Mobile-optimized design
-- Horizontally scrollable story list
-- Automatic story progression (5 seconds)
-- Manual navigation (tap left/right)
-- Smooth transitions
-- End-to-end testing
+- Story feed with user avatars and status
+- Full-screen story viewer
+- Automatic progression (5 seconds per story)
+- Touch and click navigation
+- Progress indicators
+- Play/Pause functionality
+- Responsive design (mobile and desktop)
 
 ## Tech Stack
 
-- React.js with TypeScript
-- Vite for build tooling
-- Cypress for E2E testing
-- CSS Modules for styling
+- React 18
+- TypeScript
+- Vite
+- CSS Modules
+- Cypress
 
 ## Getting Started
 
@@ -45,40 +47,17 @@ npm run dev
 
 4. Run tests
 ```bash
-# Run unit tests
-npm test
-
-# Run E2E tests
 npm run cypress
 ```
-
-## Design Choices
-
-### Performance Optimization
-- Lazy loading of images
-- CSS transitions for smooth animations
-- Efficient state management using React hooks
-- Preloading of next story for seamless transitions
-
-### Scalability
-- Modular component architecture
-- TypeScript for type safety and maintainability
-- Reusable components and utilities
-- Clear separation of concerns
-
-## Deployment
-
-The application is deployed at: [Deployment URL]
 
 ## Project Structure
 
 ```
 src/
-  ├── components/        # Reusable UI components
-  ├── hooks/            # Custom React hooks
-  ├── types/            # TypeScript type definitions
-  ├── data/            # Story data and mock APIs
-  ├── styles/          # Global styles and CSS modules
-  ├── utils/           # Utility functions
-  └── tests/           # Test files
+  ├── components/     # UI components
+  ├── hooks/         # Custom React hooks
+  ├── types/         # TypeScript types
+  ├── data/         # Mock data
+  ├── styles/       # CSS modules
+  └── tests/        # Test files
 ```

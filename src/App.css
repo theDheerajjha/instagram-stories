@@ -13,6 +13,7 @@ body {
 }
 
 .app {
+  border-radius: 10px;
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -20,12 +21,83 @@ body {
 }
 
 @media (min-width: 768px) {
-  .app {
-    max-width: 414px;
-    margin: 0 auto;
-    border-left: 1px solid #dbdbdb;
-    border-right: 1px solid #dbdbdb;
+  body {
+    background: #121212;
   }
+
+  .app {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.header {
+  width: 100%;
+  padding: 12px 16px;
+  border-bottom: 1px solid #dbdbdb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+}
+
+.logo {
+  height: 29px;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.userAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+}
+
+.userMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.storyActions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.actionButton:last-child {
+  font-size: 32px;
 }
 
 #root {
@@ -35,17 +107,17 @@ body {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
 }
 
 @keyframes logo-spin {
@@ -54,12 +126,6 @@ body {
   }
   to {
     transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
   }
 }
 

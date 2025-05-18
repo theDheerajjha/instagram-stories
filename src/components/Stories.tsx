@@ -14,12 +14,15 @@ export const Stories: React.FC = () => {
     goToPreviousStory,
     pauseStory,
     playStory,
+    setCurrentStoryIndex,
   } = useStories();
 
   const [isViewerOpen, setIsViewerOpen] = useState(false);
 
   const handleStoryClick = (index: number) => {
+    setCurrentStoryIndex(index);
     setIsViewerOpen(true);
+    playStory();
   };
 
   const handleCloseViewer = () => {
@@ -27,29 +30,26 @@ export const Stories: React.FC = () => {
     pauseStory();
   };
 
+  const handleAddStoryClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    // Here you would typically open a file picker or camera
+    console.log('Add story clicked');
+  };
+
   if (isLoading) {
-    return <div className={styles.loading}>Loading stories...</div>;
+    return <div className={styles.storiesSection}>
+      <div className={styles.storyList}>
+        <div className={styles.storySkeleton} />
+        <div className={styles.storySkeleton} />
+        <div className={styles.storySkeleton} />
+        <div className={styles.storySkeleton} />
+      </div>
+    </div>;
   }
 
-  return (
-    <div className={styles.storiesContainer}>
-      <div className={styles.storyList}>
-        {stories.map((story, index) => (
-          <div
-            key={story.id}
-            className={styles.storyPreview}
-            onClick={() => handleStoryClick(index)}
-          >
-            <img
-              src={story.imageUrl}
-              alt={`${story.username}'s story`}
-              className={styles.storyPreviewImage}
-            />
-          </div>
-        ))}
-      </div>
-
-      {isViewerOpen && currentStory && (
+  if (isViewerOpen && currentStory) {
+    return (
+      <div className={styles.fullScreenViewer}>
         <StoryViewer
           story={currentStory}
           totalStories={stories.length}
@@ -58,8 +58,57 @@ export const Stories: React.FC = () => {
           onPrevious={goToPreviousStory}
           onClose={handleCloseViewer}
           isPlaying={isPlaying}
+          onPause={pauseStory}
+          onPlay={playStory}
         />
-      )}
+      </div>
+    );
+  }
+
+  const myStory = stories.find(story => story.isMyStory);
+  const otherStories = stories.filter(story => !story.isMyStory);
+
+  return (
+    <div className={styles.storiesSection}>
+      <div className={styles.storyList}>
+        {/* Your Story */}
+        <div 
+          className={styles.storyItem} 
+          onClick={() => myStory ? handleStoryClick(0) : handleAddStoryClick}
+        >
+          <div className={styles.storyRing} style={{ background: myStory ? undefined : '#dbdbdb' }}>
+            <div className={styles.storyPreview}>
+              <img
+                src={myStory?.userAvatar || "https://i.pravatar.cc/150?img=12"}
+                alt="Your story"
+                className={styles.storyPreviewImage}
+              />
+              {!myStory && <div className={styles.addStoryButton}>+</div>}
+            </div>
+          </div>
+          <span className={styles.username}>Your story</span>
+        </div>
+
+        {/* Other Stories */}
+        {otherStories.map((story, index) => (
+          <div
+            key={story.id}
+            className={styles.storyItem}
+            onClick={() => handleStoryClick(index + 1)} // +1 because of myStory at index 0
+          >
+            <div className={`${styles.storyRing} ${story.seen ? styles.seen : ''}`}>
+              <div className={styles.storyPreview}>
+                <img
+                  src={story.userAvatar || story.imageUrl}
+                  alt={`${story.username}'s story`}
+                  className={styles.storyPreviewImage}
+                />
+              </div>
+            </div>
+            <span className={styles.username}>{story.username}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }; 

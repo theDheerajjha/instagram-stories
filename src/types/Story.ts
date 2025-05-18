@@ -3,7 +3,9 @@ export interface Story {
   imageUrl: string;
   username: string;
   timestamp: string;
-  viewed: boolean;
+  seen: boolean;
+  userAvatar?: string;
+  isMyStory?: boolean;
 }
 
 export interface StoriesState {

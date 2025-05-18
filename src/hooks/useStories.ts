@@ -37,6 +37,9 @@ export const useStories = () => {
           setState(prev => ({
             ...prev,
             currentStoryIndex: prev.currentStoryIndex + 1,
+            stories: prev.stories.map((story, index) => 
+              index === prev.currentStoryIndex ? { ...story, seen: true } : story
+            ),
           }));
         }
       }, STORY_DURATION);
@@ -53,6 +56,9 @@ export const useStories = () => {
         return {
           ...prev,
           currentStoryIndex: prev.currentStoryIndex + 1,
+          stories: prev.stories.map((story, index) => 
+            index === prev.currentStoryIndex ? { ...story, seen: true } : story
+          ),
         };
       }
       return prev;
@@ -79,6 +85,13 @@ export const useStories = () => {
     setState(prev => ({ ...prev, isPlaying: true }));
   }, []);
 
+  const setCurrentStoryIndex = useCallback((index: number) => {
+    setState(prev => ({
+      ...prev,
+      currentStoryIndex: index,
+    }));
+  }, []);
+
   return {
     stories: state.stories,
     currentStory: state.stories[state.currentStoryIndex],
@@ -89,5 +102,6 @@ export const useStories = () => {
     goToPreviousStory,
     pauseStory,
     playStory,
+    setCurrentStoryIndex,
   };
 }; 
